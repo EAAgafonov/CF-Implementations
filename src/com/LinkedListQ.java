@@ -138,4 +138,3 @@ public class LinkedListQ<E> extends AbstractList<E> {
 	}
 	
 }
-
