@@ -4,6 +4,6 @@
 *.jar
 *.ear
 
-*.classpath
+.classpath
 *.project
 /bin/
