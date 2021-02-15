@@ -1,9 +1,0 @@
-*.class
-
-*.war
-*.jar
-*.ear
-
-.classpath
-*.project
-/bin/
