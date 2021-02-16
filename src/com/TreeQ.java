@@ -1,7 +1,6 @@
 package com;
 
 import java.util.*;
-
 import nodes.TreeNode;
 
 //Binary tree
@@ -9,7 +8,7 @@ public class TreeQ<E extends Comparable<? super E>> {
 	TreeNode<E> root;
 	
 	public TreeQ() {
-		root = new TreeNode<>();
+		root = new TreeNode<>(null);
 	}
 	
 	public boolean addIterate(E data) {
@@ -92,22 +91,61 @@ public class TreeQ<E extends Comparable<? super E>> {
 	
 
 	private TreeNode<E> deleteRecursive(TreeNode<E> curr, E data) {
-		return null;
+		int comp = data.compareTo(curr.getData());
+		
+		if(!contains(data)) {
+			System.out.println("there's no such element");
+			return null;
+		}
+		
+		if (comp < 0) {
+			curr = deleteRecursive(curr.getLeftChild(), data);
+		} else if (comp > 0) {
+			curr = deleteRecursive(curr.getRightChild(), data);
+		} else {
+			//found
+			comp = curr.getData().compareTo(curr.getParent().getData());
+			if (curr.getLeftChild() == null && curr.getRightChild() == null) {
+				if (comp < 0) {
+					System.out.println("1");
+					curr.getParent().delLeft();
+					return null;
+				} else if (comp > 0) {
+					System.out.println("2");
+					curr.getParent().delRight();
+					return null;
+				}
+			} else if (curr.getLeftChild() == null) {
+				System.out.println("3");
+				curr.setData(curr.getRightChild().getData());
+				curr.delRight();
+				return null;
+			} else if (curr.getRightChild() == null) {
+				System.out.println("4");
+				curr.setData(curr.getLeftChild().getData());
+				curr.delLeft();
+				return null;
+			} else {
+				//search for min. copy to the one we deleting. delete smallest
+				TreeNode<E> minValue = findsmallestValue(curr);
+				curr.setData(minValue.getData());
+				minValue.getParent().delLeft();
+				return null;
+			}
+		}
+		return curr;
+	}
+	private TreeNode<E> findsmallestValue(TreeNode<E> curr) {
+		return curr.getLeftChild() == null ? curr : findsmallestValue(curr.getLeftChild());
 	}
 	public void delete(E data) {
-		
+		TreeNode<E> curr = root;
+		if (data == null) {
+			throw new NullPointerException("no data to delete");
+		} else {
+			deleteRecursive(curr, data);
+		}
 	}
-	
-	//add different searches
-	
-	
-	
-	
-	
-	
-	
-	
-/*	
 	
 	//depth first traversal
 	private void preOrder(TreeNode<E> node) {
@@ -117,9 +155,7 @@ public class TreeQ<E extends Comparable<? super E>> {
 			preOrder(node.getRightChild());
 		}
 	}
-	public void preOrder() {
-		this.preOrder(root);
-	}
+	public void preOrder() { this.preOrder(root); }
 	
 	
 	//breath First Traversal
@@ -137,16 +173,8 @@ public class TreeQ<E extends Comparable<? super E>> {
 		}
 		
 	}
-*/
-/*
-	public TreeNode<E> searchNode(E val) {
-		TreeNode<E> target = root;
-		
-		
-		
-		return target;
-	}
-*/	
+	public void levelOrder() { this.levelOrder(root); }
+
 
 	
 	
@@ -157,9 +185,21 @@ public class TreeQ<E extends Comparable<? super E>> {
 		qwe.addIterate("asd");
 		qwe.addIterate("zxc");
 		
-		qwe.addRec("wert");
+		qwe.addRec("aad");
+		qwe.addRec("awz");
+		qwe.addRec("abc");
+		qwe.addRec("aaa");
 		
-		System.out.println(qwe.contains("wert"));
+		qwe.preOrder();
+		System.out.println();
+		qwe.levelOrder();
+		System.out.println();
+		
+		qwe.delete("asd");
+		System.out.println();
+		qwe.preOrder();
+		System.out.println();
+		qwe.levelOrder();
 		
 		
 	}

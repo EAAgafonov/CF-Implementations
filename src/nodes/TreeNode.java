@@ -6,10 +6,7 @@ public class TreeNode<E> {
 	private TreeNode<E> rightChild;
 	private E data;
 	
-	public TreeNode() {
-		this.data = null;
-	}
-	
+
 	public TreeNode(E data) {
 		this.data = data;
 	}
@@ -19,7 +16,6 @@ public class TreeNode<E> {
 		this.parent = par;
 	}
 
-	
 	
 	public TreeNode<E> addLeftChild(E val, TreeNode<E> par) {
 		this.leftChild = new TreeNode<E>(val, this);
@@ -36,16 +32,17 @@ public class TreeNode<E> {
 	public TreeNode<E> getLeftChild() { return leftChild; }
 	public TreeNode<E> getRightChild() { return rightChild; }
 	
-	public E getData() {
-		return data;
-	}
-	public void setData(E data) {
-		this.data = data;
-	}
+	public E getData() { return data; }
+	public void setData(E data) { this.data = data; }
+	
+	public void delLeft() { this.leftChild = null; }
+	public void delRight() { this.rightChild = null; }
+	
+	public TreeNode<E> getParent() { return parent; }
 	
 	//does something with a node
 	public void visit() {
-		
+		System.out.println(data);
 	}
 	
 
